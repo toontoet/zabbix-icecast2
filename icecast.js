@@ -29,7 +29,6 @@ try {
 	}
 
 	const sources = status.icestats.source.map((s) => {
-		console.log(s)
 		return { "{#NAME}": s.$.mount,  "{#STATUS}": 1 }
 	});
 
