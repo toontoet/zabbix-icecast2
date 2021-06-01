@@ -55,7 +55,7 @@ Example item key:
 ```
 icecast2.status[{#NAME},total_bytes_sent]
 ```
-
+Available properties:
 
 ```
 {
