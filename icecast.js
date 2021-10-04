@@ -14,11 +14,18 @@ const args = process.argv.slice(2)
 try {
 	const status = await getStatus();
 
-	if (args.length > 0) { 
+	if (args.length == 1) {
+
+		console.log(status.icestats[ args[0] ][0])
+		process.exit(2)
+
+	}
+
+	if (args.length > 1) { 
 
 		const source = status.icestats.source.filter((s) => {
-	        return s.$.mount === args[0]
-	    })
+			return s.$.mount === args[0]
+		})
 
 		if (source.length<1) process.exit(2)
 
