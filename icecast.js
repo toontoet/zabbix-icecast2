@@ -2,17 +2,25 @@
 
 import DigestFetch from "digest-fetch"
 import {parseString } from 'xml2js';
-
+import cache from 'persistent-cache';
 
 const ICECAST_STATUS_URL = "http://localhost:8000/admin/stats.xml";
 const ICECAST_ADMIN_USER = 'admin';
 const ICECAST_ADMIN_PASSWORD = 'secret';
 
+const TTL = 15000; // 1min
 
 const args = process.argv.slice(2)
 
+const data = cache({ duration: TTL, base: '/tmp' });
+
 try {
-	const status = await getStatus();
+	let status = data.getSync('status');
+	if (!status) {
+		// there is no valid cache, get it from server:
+		status = await getStatus();
+		data.putSync('status', status);
+	}
 
 	if (args.length == 1) {
 
